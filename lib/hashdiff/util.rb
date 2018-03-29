@@ -74,7 +74,13 @@ module HashDiff
   def self.node(hash, parts)
     temp = hash
     parts.each do |part|
-      temp = temp[part]
+      if part.is_a?(String)
+        temp = temp[part.to_s] || temp[part.to_sym]
+      else
+        temp = temp[part]
+      end
+
+      return nil if temp.nil?
     end
     temp
   end
